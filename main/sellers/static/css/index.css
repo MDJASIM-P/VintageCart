@@ -1,0 +1,22 @@
+.msgdrop{
+    display: none;
+}
+.feeddrop{
+    top: -19px; 
+    right:2px; 
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .forms{
+        display: none;
+    }
+    .msgdrop{
+        display: block;
+    }
+    .feedbtn{
+        display:none;
+    }
+    .feeddrop{
+        display: block;
+    }
+  }

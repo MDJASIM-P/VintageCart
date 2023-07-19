@@ -1,0 +1,114 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/fb64fe6586.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Noto+Serif+JP&family=Satisfy&display=swap");
+      .navbar-brand{
+            font-family: 'Satisfy', cursive;
+        }
+      .box:hover{
+          margin-top: -5px;
+          transition-duration: 0.5s;
+      }
+      
+    </style>
+  </head>
+  <body>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <div class="row m-0">
+        <!-- left side -->
+        <div class="col-md-3 border border-right p-0 vh-100" style="background-color: antiquewhite;">
+          <a class="navbar-brand text-white bg-dark w-100 text-center mr-0" href="#"><i class="fa-brands fa-vimeo-v border border-warning p-2 mr-2 text-warning"></i>Vintage Cart</a>
+          <div class="d-flex flex-column p-3">
+            <div class="row text-secondary">
+              <i class="fa-solid fa-house p-1"></i><h5 class="mr-2">DashBoard</h5>
+            </div>
+            <ul>
+              <a href="{% url 'dash' %}"><li class="text-secondary">Home</li></a>            
+              <a href="{% url 'admU' %}"><li class="text-secondary">Users</li></a>            
+              <a href="{% url 'admP' %}"><li class="text-secondary">Products</li></a>            
+              <a href="{% url 'admM' %}"><li class="text-secondary">Messages</li></a>            
+              <a href="{% url 'admF' %}"><li class="text-secondary">Feedbacks</li></a>                   
+            </ul>
+          </div>
+        </div>
+        <!-- right side -->
+        <div class="col p-0 col-md-9 pb-4">
+            <div class="container-fluid p-2">
+                <div class="row m-0 p-1 justify-content-between">
+                    <h3>Analytics</h3>
+                    <a href="{% url 'admLO' %}" class="btn btn-warning">LogOut</a>
+                </div>
+                <!-- profile -->
+                <div class="row m-0 bg-primary p-3 rounded justify-content-between" style="height: 200px;">
+                    <div class="row col-12 col-md-9 m-0">
+                        <img src="{% static 'images/admin.jpeg' %}" alt="" width="80px" height="70px" class="rounded-circle">
+                        <div class="col">
+                            <h4>Hi Jasim</h4>
+                            <p>Here is what’s happening with your projects today:</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-none d-md-block">
+                        <button class="btn btn-light font-weight-bold">What’s New</button>
+                    </div>
+                </div>
+                <!-- end profile -->
+                <!-- boxs -->
+                <div class="p-3 d-flex justify-content-around flex-wrap position-relative mt-n5">
+                    <div class="box px-1 p-2 border rounded bg-light  col-lg-3 mb-2" >
+                        <div class=" d-flex justify-content-between align-items-center">
+                            <h3>Users</h3>
+                            <i class="fa-solid fa-user-group border p-3 rounded-circle bg-primary"></i>
+                        </div>
+                        <h2>{{users.count}}</h2>
+                        <p class="m-0">more</p>
+                    </div>
+                    <div class="box px-1 p-2 border rounded bg-light col-lg-3 mb-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Products</h3>
+                            <i class="fa-solid fa-shirt border p-3 rounded-circle bg-primary"></i>
+                        </div>
+                        <h2>{{pros.count}}</h2>
+                        <p class="m-0">more</p>
+                    </div>
+                    <div class="box px-1 p-2 border rounded bg-light col-lg-3 mb-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Messages</h3>
+                            <i class="fa-solid fa-comments border p-3 rounded-circle bg-primary"></i>
+                        </div>
+                        <h2>{{msgs.count}}</h2>
+                        <p class="m-0">more</p>
+                    </div>
+                    <div class="box px-1 p-2 border rounded bg-light col-lg-3 mb-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Feedbacks</h3>
+                            <i class="fa-solid fa-list border p-3 rounded-circle bg-primary"></i>
+                        </div>
+                        <h2>{{feeds.count}}</h2>
+                        <p class="m-0">more</p>
+                    </div>
+                </div>
+                <!-- end boxs --> 
+            </div>
+        </div>
+    </div>
+  </body>
+
+  
+</html>

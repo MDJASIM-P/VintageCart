@@ -1,0 +1,108 @@
+{% extends 'nav.html' %} 
+{% block nav %}
+<style>
+    .capitalize::first-letter{
+        text-transform: capitalize;
+    }
+</style>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-4 p-2 border">
+                <img src="{{pro.image.url}}" alt="img" class="w-100">
+            </div>
+            <div class="col-8 p-2 border-right">
+                <h2>{{pro.name}}</h2>
+                <p>₹{{pro.price}}</p>
+                <p>{{pro.details}}</p>
+                <form action="" class="form flex-row" method="post">
+                  {% csrf_token %}
+                  <input type="number" name="quantity" id="" placeholder="Quantity">
+                  <button type="submit" class="btn btn-danger" name="cart">Add to Cart</button>
+                </form>
+                <div class="row m-1">
+                    <a href="#" class="btn btn-success btn-block">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% if feed %}
+        <div class="col mt-5 mb-5">
+            <h2>Feedbacks</h2>
+            {% for i in feed %}
+            <!-- Feedbacks -->
+            <div class="col-12 col-md-6 border">
+                <div class="row m-0">
+                    {% if i.seller == request.user %}
+                    <p>You</p>
+                    {% else %}
+                    <p class="capitalize">{{i.seller}}</p>
+                    {% endif %}
+                </div>                
+                {% if i.report_set.count > 2 %}
+                    <h4>This content is blocked</h4>
+                {% else %}
+                    <h6>{{i.title}}</h6>
+                    <p>{{i.feedback}}</p>
+                    <div class="row m-0">
+                        <!-- like button -->
+                        {% if request.user in i.likes.all %}
+                        <a href="{% url 'feedlike' i.id %}"><i class="fa-solid fa-thumbs-up p-1"></i><p class="text-dark">{{i.likes.count}} Likes</p></a>
+                        {% else %}
+                        <a href="{% url 'feedlike' i.id %}"><i class="fa-solid fa-thumbs-up p-1 text-dark"></i><p class="text-dark">{{i.likes.count}} Likes</p></a>
+                        {% endif %}
+                        <!-- end like button -->
+                        {% if i.seller == request.user %}
+                        <a href="{% url 'feededit' i.id %}" class="mr-3">Edit</a>
+                        <a href="{% url 'feedremove' i.id %}">Remove</a>
+                        {% else %}
+                        <p onclick="reportForm('{{i.id}}')" style="cursor: pointer;">Report</p>
+                        {% endif %}
+                        <p class="ml-auto">{{i.datetime |date:'Y-m-d h:i A'}}</p>
+                        <!-- Report box -->
+                        <div class="alert" id="{{i.id}}" style="display: none;">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span><br>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="tabel">
+                                    <input type="number" value="{{i.id}}" class="d-none" name="feedid">
+                                    <select name="report" id="repo">
+                                        <option value="None">Choose One</option>
+                                        <option value="Unwanted commercial content or spam">Unwanted commercial content or spam</option>
+                                        <option value="Spam">Spam</option>
+                                        <option value="Hate speech">Hate Speech</option>
+                                        <option value="Harassment">Harassment</option>
+                                        <option value="Misinformation">Misinformation</option>
+                                        <option value="Scams">Scams</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-danger" name="rpt">Report</button>
+                            </form>
+                        </div>
+                        <!-- end report box -->
+                {% endif %}
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+            <!-- end Feedbacks -->
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        function reportForm(id) {
+            var id =  id;
+            document.getElementById(id).style.display = "block";
+        }
+    </script>
+{% endblock %}
+
